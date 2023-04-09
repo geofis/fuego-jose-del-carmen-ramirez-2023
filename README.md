@@ -127,18 +127,18 @@ Pero enmarquemos el problema. Es marzo, las precipitaciones son muy
 reducidas y la preparación de tierras usando quemas está en su momento
 más álgido; el parque es, literalmente, un fogón. Es por esta razón que
 me interesa darle el contexto requerido a este incendio: todo comenzó
-dentro de un parque nacional con una incesante actividad agrícola, donde
-la quema se usa de manera regular (DENTRO del parque, reitero). Por esta
-razón, si analizamos lo que ocurrió fuera del área de “alarma social”,
-no nos debería sorprender que las cifras de superficies quemadas sean
-enormes. Veamos el dato, también como intervalo:
+dentro de un parque nacional que exhibe una incesante actividad
+agrícola, donde la quema se usa de manera regular (DENTRO del parque,
+reitero). Por esta razón, si analizamos lo que ocurrió fuera del área de
+“alarma social”, no nos debería sorprender que las cifras de superficies
+quemadas sean enormes. Veamos el dato, también como intervalo:
 **37.79 $\leq$ $x$ $\leq$ 47.59 $km^2$**. Este intervalo contiene **la
 cantidad de terreno quemado a partir del 21 de febrero hasta abril
 dentro del área protegida** (en enero también se quemó otro poco). Mucho
-fue pastizal, matorral o bosque secundario, pero recuerda, es parque
-nacional. La distribución, según coberturas, es como sigue: en el
-escenario de menor área quemada, sería 17.94 $km^2$ de bosque, y en el
-escenario de mayor área quemada 27.36 $km^2$.
+fue pastizal, matorral o bosque secundario; pero recuerda, estamos
+hablando de un parque nacional. La distribución, según coberturas, es
+como sigue: en el escenario de menor área quemada, sería 17.94 $km^2$ de
+bosque, y en el escenario de mayor área quemada 27.36 $km^2$.
 
 ![Áreas quemadas en el parque nacional José del Carmen Ramírez,
 marzo-abril de 2023. El detalle muestra amplía el borde norte que enlaza
@@ -150,13 +150,13 @@ visual de imagen Landsat 9 de 8 abril (confiable), y los de color
 naranja, envolventes convexas de los puntos de calor / anomalías
 térmicas de FIRMS.](img/dnbr-interpretacion-visual-8-abril-hotspots.jpg)
 
-No nos hemos “sentado” a tener esta discusión a nivel de país, aunque
-esta realmente la norma respecto del conjunto de nuestro sistema de
-áreas protegidas. Ni siquiera las áreas más carismáticas, como Los
-Haitises, sierra de Bahoruco o Valle Nuevo, han podido salir de este
-círculo de degradación ambiental. No obstante, de éstas se habla,
-“salen” en los medios, pero el parque nacional José del Carmen Ramírez
-no suele mencionarse.
+No nos hemos “sentado” a tener una discusión a nivel de país sobre
+muchas de nuestras áreas protegidas, pero esta es la norma respecto del
+conjunto del sistema: hemos discutido poco. Es relevante que ni tan
+siquiera las áreas más carismáticas, como Los Haitises, sierra de
+Bahoruco o Valle Nuevo, han podido salir de este círculo de degradación
+ambiental. De éstas últimas se habla, “salen” en los medios, pero el
+parque nacional José del Carmen Ramírez “no suena”.
 
 Hay algunas señales preocupantes sobre lo que está ocurriendo en el
 parque nacional José del Carmen Ramírez. Año tras año, la frontera
