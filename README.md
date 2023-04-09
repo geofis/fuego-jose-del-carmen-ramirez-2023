@@ -85,19 +85,24 @@ marzo-abril de 2023](img/superficie-quemada-conjunto.jpg)
 
 ### El dato (en desarrollo)
 
-Un incendio forestal que inició en marzo sobre el parque nacional José
-del Carmen Ramírez, cordillera Central de República Dominicana, quemó
-superficies considerables de bosque de pinar. El hecho de que algunos
-focos se acercaran al pico Duarte, popularizó este desafortunado
-episodio de la historia del parque. Aunque es probable que hayas llegado
-hasta aquí buscando “cuánto se quemó”, nos gustan los números.
+Un incendio forestal que inició en marzo, dentro del parque nacional
+José del Carmen Ramírez, cordillera Central de República Dominicana,
+quemó superficies considerables de bosque de pinar. El hecho de que
+algunos focos se acercaran al pico Duarte (máxima elevación del Caribe
+Insula), popularizó este desafortunado episodio de la historia del
+parque. Es probable que hayas llegado hasta aquí buscando “cuánto se
+quemó”, pues usamos las cifras para establecer comparaciones y, en
+definitiva, nos gustan los números. Pero no te quedes sólo con la cifra,
+pues este incendio visibiliza un problema más complejo: la intensa
+agricultura migratoria dentro del área protegida.
 
 > “A los mayores les gustan las cifras”. Antoine de Saint-Exupéry, *El
 > principito*
 
-En lugar de darte una cifra cerrada, pues se trata de un evento aún en
-desarrollo (a 8 de abril de 2023), mejor te ofrezco un intervalo: **5.71
-$\leq$ valor definitivo $\leq$ 15.52** $km^2$ (consulta la sección
+No puedo darte una cifra cerrada, pues se trata de un evento aún en
+desarrollo (a 8 de abril de 2023). En su defecto, te ofrezco un
+intervalo probable dentro del cual se encuentra el valor definitivo:
+**5.71 $\leq$ $x$ $\leq$ 15.52 $km^2$** (consulta la sección
 [Método](#metodo) para obtener detalles sobre el procedimiento de
 cálculo). Prácticamente todo lo quemado es bosque de distintas
 densidades, pero también hay herbazales (cf. pajonales). Este intervalo
@@ -126,11 +131,11 @@ dentro de un parque nacional con una incesante actividad agrícola, donde
 la quema se usa de manera regular (DENTRO del parque, reitero). Por esta
 razón, si analizamos lo que ocurrió fuera del área de “alarma social”,
 no nos debería sorprender que las cifras de superficies quemadas sean
-enormes. Veamos el dato, también como intervalo: **37.79 $\leq$ valor
-definitivo $\leq$ 47.59** $km^2$. Este intervalo contiene **la cantidad
-de terreno quemado a partir del 21 de febrero hasta abril dentro del
-área protegida** (en enero también se quemó otro poco). Mucho fue
-pastizal, matorral o bosque secundario, pero recuerda, es parque
+enormes. Veamos el dato, también como intervalo:
+**37.79 $\leq$ $x$ $\leq$ 47.59 $km^2$**. Este intervalo contiene **la
+cantidad de terreno quemado a partir del 21 de febrero hasta abril
+dentro del área protegida** (en enero también se quemó otro poco). Mucho
+fue pastizal, matorral o bosque secundario, pero recuerda, es parque
 nacional. La distribución, según coberturas, es como sigue: en el
 escenario de menor área quemada, sería 17.94 $km^2$ de bosque, y en el
 escenario de mayor área quemada 27.36 $km^2$.
@@ -163,11 +168,13 @@ de bosque.
 ![Áreas de bosque afectadas por fuego en la loma el
 Picacho](img/loma-el-picacho.jpg)
 
-Si buscas su importancia encontrarás referencias al agua, la
-biodiversidad y otros valores. Te lo voy a poner fácil: sin José del
-Carmen Ramírez no habrá Armando Bermúdez y, sin este último, “se pué
-cuidá el Cibao (y to’ el país)”. No perdamos el foco, esto es serio, el
-país necesita esta discusión.
+Si buscas la importancia de esta área protegida, encontrarás referencias
+sobre su papel en la captación de agua, o sobre su destacada
+biodiversidad. Sin embargo, te lo voy a poner fácil: sin José del Carmen
+Ramírez no habría Armando Bermúdez y, sin este último, “se pué cuidá el
+Cibao (y to’ el país)”. No perdamos el foco, esto es serio, el país
+necesita una discusión profunda sobre el presente y el futuro de este
+parque nacional.
 
 ## Método
 
