@@ -26,22 +26,26 @@ if(interactive()) plot(dnbr)
 april_8 <- st_read('fuentes/mascara-quemado-inferido-imputado-from-landsat-april-8.gpkg', quiet = T)
 dnbr_april8 <- rasterize(as(april_8, 'Spatial'), y = dnbr, field = 'DN', update = T)
 if(interactive()) plot(dnbr_april8)
-cross_tab_parque_min <- crosstab(dnbr_april8, esa)
+hotspots <- st_read('fuentes/mascara-quemado-inferido-imputado-from-hotspots.gpkg', quiet = T)
+dnbr_april8_hotspots <- rasterize(as(hotspots, 'Spatial'),
+                                  y = dnbr_april8, field = 'DN', update = T)
+if(interactive()) plot(dnbr_april8_hotspots)
+cross_tab_parque_min <- crosstab(dnbr_april8_hotspots, esa)
 cross_tab_parque_min <- cross_tab_parque_min[2, 2:ncol(cross_tab_parque_min)]
 names(cross_tab_parque_min) <- c("Trees", "Shrubland", "Grassland", "Cropland",
                       "Built-up", "Barren / sparse vegetation", "Open water")
 cross_tab_parque_min <- cross_tab_parque_min[c("Trees", "Shrubland",
                                                  "Grassland", "Cropland")]
 pct_parque_min <- round(prop.table(cross_tab_parque_min)*100, 2)
-km2_parque_min <- cross_tab_parque_min * prod(res(dnbr_april8))/1000000
+km2_parque_min <- cross_tab_parque_min * prod(res(dnbr_april8_hotspots))/1000000
 total_km2_parque_min <- sum(km2_parque_min)
 
 #Todo el parque. Límite máximo del intervalo
-hotspots <- st_read('fuentes/mascara-quemado-inferido-imputado-from-hotspots.gpkg', quiet = T)
-dnbr_april8_hotspots <- rasterize(as(hotspots, 'Spatial'),
+planet_april9 <- st_read('fuentes/mascara-quemado-inferido-imputado-from-planet-april-9.gpkg', quiet = T)
+dnbr_april8_april9 <- rasterize(as(planet_april9, 'Spatial'),
                                   y = dnbr_april8, field = 'DN', update = T)
-if(interactive()) plot(dnbr_april8_hotspots)
-cross_tab_parque_max <- crosstab(dnbr_april8_hotspots, esa)
+if(interactive()) plot(dnbr_april8_april9)
+cross_tab_parque_max <- crosstab(dnbr_april8_april9, esa)
 cross_tab_parque_max <- cross_tab_parque_max[2, 2:ncol(cross_tab_parque_max)]
 names(cross_tab_parque_max) <- c("Trees", "Shrubland", "Grassland", "Cropland",
                       "Built-up", "Barren / sparse vegetation", "Open water")
@@ -53,22 +57,22 @@ total_km2_parque_max <- sum(km2_parque_max)
 
 #Área de alarma social (próxima al pico Duarte). Límite mínimo del intervalo
 aoi <- st_read('fuentes/sector-norte-frontera-agropecuaria.gpkg', quiet = T)
-dnbr_april8_aoi <- mask(crop(dnbr_april8, extent(aoi)), aoi)
+dnbr_april8_hotspots_aoi <- mask(crop(dnbr_april8_hotspots, extent(aoi)), aoi)
 esa_aoi <- mask(crop(esa, extent(aoi)), aoi)
-cross_tab_aoi_min <- crosstab(dnbr_april8_aoi, esa_aoi)
+cross_tab_aoi_min <- crosstab(dnbr_april8_hotspots_aoi, esa_aoi)
 cross_tab_aoi_min <- cross_tab_aoi_min[, 2:4]
 names(cross_tab_aoi_min) <- c("Trees", "Shrubland", "Grassland")
 pct_aoi_min <- round(prop.table(cross_tab_aoi_min)*100, 2)
-km2_aoi_min <- cross_tab_aoi_min * prod(res(dnbr_april8_aoi))/1000000
+km2_aoi_min <- cross_tab_aoi_min * prod(res(dnbr_april8_hotspots_aoi))/1000000
 total_km2_aoi_min <- sum(km2_aoi_min)
 
 #Área de alarma social (próxima al pico Duarte). Límite máximo del intervalo
-dnbr_april8_hotspots_aoi <- mask(crop(dnbr_april8_hotspots, extent(aoi)), aoi)
-cross_tab_aoi_max <- crosstab(dnbr_april8_hotspots_aoi, esa_aoi)
+dnbr_april8_april9_aoi <- mask(crop(dnbr_april8_april9, extent(aoi)), aoi)
+cross_tab_aoi_max <- crosstab(dnbr_april8_april9_aoi, esa_aoi)
 cross_tab_aoi_max <- cross_tab_aoi_max[, 2:4]
 names(cross_tab_aoi_max) <- c("Trees", "Shrubland", "Grassland")
 pct_aoi_max <- round(prop.table(cross_tab_aoi_max)*100, 2)
-km2_aoi_max <- cross_tab_aoi_max * prod(res(dnbr_april8_hotspots_aoi))/1000000
+km2_aoi_max <- cross_tab_aoi_max * prod(res(dnbr_april8_april9_aoi))/1000000
 total_km2_aoi_max <- sum(km2_aoi_max)
 ```
 
@@ -102,7 +106,7 @@ agricultura migratoria dentro del área protegida.
 No puedo darte una cifra cerrada, pues se trata de un evento aún en
 desarrollo (a 8 de abril de 2023). En su defecto, te ofrezco un
 intervalo probable dentro del cual se encuentra el valor definitivo:
-**5.71 $\leq$ $x$ $\leq$ 15.52 $km^2$** (consulta la sección
+**15.52 $\leq$ $x$ $\leq$ 31.1 $km^2$** (consulta la sección
 [Método](#metodo) para obtener detalles sobre el procedimiento de
 cálculo). Prácticamente todo lo quemado es bosque de distintas
 densidades, pero también hay herbazales (cf. pajonales). Este intervalo
@@ -132,23 +136,26 @@ agrícola, donde la quema se usa de manera regular (DENTRO del parque,
 reitero). Por esta razón, si analizamos lo que ocurrió fuera del área de
 “alarma social”, no nos debería sorprender que las cifras de superficies
 quemadas sean enormes. Veamos el dato, también como intervalo:
-**37.79 $\leq$ $x$ $\leq$ 47.59 $km^2$**. Este intervalo contiene **la
+**47.59 $\leq$ $x$ $\leq$ 63.22 $km^2$**. Este intervalo contiene **la
 cantidad de terreno quemado a partir del 21 de febrero hasta abril
 dentro del área protegida** (en enero también se quemó otro poco). Mucho
 fue pastizal, matorral o bosque secundario; pero recuerda, estamos
 hablando de un parque nacional. La distribución, según coberturas, es
-como sigue: en el escenario de menor área quemada, sería 17.94 $km^2$ de
-bosque, y en el escenario de mayor área quemada 27.36 $km^2$.
+como sigue: en el escenario de menor área quemada, sería 27.36 $km^2$ de
+bosque, y en el escenario de mayor área quemada 42.39 $km^2$.
 
 ![Áreas quemadas en el parque nacional José del Carmen Ramírez,
 marzo-abril de 2023. El detalle muestra amplía el borde norte que enlaza
 con el PN Armando Bermúdez. Los polígonos sombreados en naranja son
 áreas quemadas calculadas por el método dNBR, que ofrece una alta
 confiabilidad. Los polígonos de trazo discontinuo son áreas que se han
-imputado como quemadas; los de color amarillo proceden de interpretación
-visual de imagen Landsat 9 de 8 abril (confiable), y los de color
-naranja, envolventes convexas de los puntos de calor / anomalías
-térmicas de FIRMS.](img/dnbr-interpretacion-visual-8-abril-hotspots.jpg)
+imputado como quemadas. Los de color amarillo proceden de interpretación
+visual de imagen Landsat 9 de 8 abril (confiable), y envolventes
+convexas de los puntos de calor / anomalías térmicas de FIRMS. El
+polígono de trazo de discontinuo de color naranja, encierra parcialmente
+(con islas incluidas) la superficie visiblemente quemada en una imagen
+de Planet de 9 de abril de
+2023.](img/dnbr-interpretacion-visual-8-abril-hotspots.jpg)
 
 No nos hemos “sentado” a tener una discusión a nivel de país sobre
 muchas de nuestras áreas protegidas, pero esta es la norma respecto del
