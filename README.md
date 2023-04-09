@@ -78,6 +78,9 @@ total_km2_aoi_max <- sum(km2_aoi_max)
 > del Carmen Ramírez, una de las áreas protegidas más amenazadas en
 > nuestro país por la agricultura migratoria.
 
+![Áreas quemadas en el parque nacional José del Carmen Ramírez,
+marzo-abril de 2023](img/superficie-quemada-conjunto.jpg)
+
 ## Resultados
 
 ### El dato (en desarrollo)
@@ -94,17 +97,18 @@ hasta aquí buscando “cuánto se quemó”, nos gustan los números.
 
 En lugar de darte una cifra cerrada, pues se trata de un evento aún en
 desarrollo (a 8 de abril de 2023), mejor te ofrezco un intervalo: **5.71
-$\leq$ valor definitivo $\leq$ 15.52** $km^2$. Prácticamente todo lo
-quemado es bosque de distintas densidades, pero también hay herbazales
-(cf. pajonales). Este intervalo contiene, con cierto nivel de confianza,
-**la cantidad final de kilómetros cuadrados de área boscosa (en general,
-pinar) quemados durante marzo en el “área de mayor preocupación”, que es
-el borde norte del parque nacional José del Carmen Ramírez en su
-aproximación hacia el pico Duarte**. Como aclaré, esta área se quemó
-producto de un foco que inició a finales de marzo en cobertura no
-boscosa (e.g. frontera agrícola), y que remontó hacia el norte,
-adentrándose en el bosque y acercándose bastante al pico Duarte, donde
-produjo “alarma social”.
+$\leq$ valor definitivo $\leq$ 15.52** $km^2$ (consulta la sección
+[Método](#metodo) para obtener detalles sobre el procedimiento de
+cálculo). Prácticamente todo lo quemado es bosque de distintas
+densidades, pero también hay herbazales (cf. pajonales). Este intervalo
+contiene, con cierto nivel de confianza, **la cantidad final de
+kilómetros cuadrados de área boscosa (en general, pinar) quemados
+durante marzo en el “área de mayor preocupación”, que es el borde norte
+del parque nacional José del Carmen Ramírez en su aproximación hacia el
+pico Duarte**. Como aclaré, esta área se quemó producto de un foco que
+inició a finales de marzo en cobertura no boscosa (e.g. frontera
+agrícola), y que remontó hacia el norte, adentrándose en el bosque y
+acercándose bastante al pico Duarte, donde produjo “alarma social”.
 
 ¿Por qué es tan amplio el intervalo? Porque para obtenerlo por medio de
 imágenes satelitales, dependemos de que las nubes “nos dejen brechar” el
@@ -131,6 +135,16 @@ nacional. La distribución, según coberturas, es como sigue: en el
 escenario de menor área quemada, sería 17.94 $km^2$ de bosque, y en el
 escenario de mayor área quemada 27.36 $km^2$.
 
+![Áreas quemadas en el parque nacional José del Carmen Ramírez,
+marzo-abril de 2023. El detalle muestra amplía el borde norte que enlaza
+con el PN Armando Bermúdez. Los polígonos sombreados en naranja son
+áreas quemadas calculadas por el método dNBR, que ofrece una alta
+confiabilidad. Los polígonos de trazo discontinuo son áreas que se han
+imputado como quemadas; los de color amarillo proceden de interpretación
+visual de imagen Landsat 9 de 8 abril (confiable), y los de color
+naranja, envolventes convexas de los puntos de calor / anomalías
+térmicas de FIRMS.](img/dnbr-interpretacion-visual-8-abril-hotspots.jpg)
+
 No nos hemos “sentado” a tener esta discusión a nivel de país, aunque
 esta realmente la norma respecto del conjunto de nuestro sistema de
 áreas protegidas. Ni siquiera las áreas más carismáticas, como Los
@@ -139,13 +153,21 @@ círculo de degradación ambiental. No obstante, de éstas se habla,
 “salen” en los medios, pero el parque nacional José del Carmen Ramírez
 no suele mencionarse.
 
+Hay algunas señales preocupantes sobre lo que está ocurriendo en el
+parque nacional José del Carmen Ramírez. Año tras año, la frontera
+agrícola avanza más y más hacia el norte y al oeste, que son los únicos
+cuadrantes todavía con bosque del área protegida. En concreto, en la
+loma El Picacho (oeste del parque) un incendio consumió varias hectáreas
+de bosque.
+
+![Áreas de bosque afectadas por fuego en la loma el
+Picacho](img/loma-el-picacho.jpg)
+
 Si buscas su importancia encontrarás referencias al agua, la
 biodiversidad y otros valores. Te lo voy a poner fácil: sin José del
 Carmen Ramírez no habrá Armando Bermúdez y, sin este último, “se pué
 cuidá el Cibao (y to’ el país)”. No perdamos el foco, esto es serio, el
 país necesita esta discusión.
-
-Luego pongo mapas, esto es todo por hoy.
 
 ## Método
 
@@ -164,20 +186,20 @@ del índice normalizado de quema (dNBR). Este método ofrece el cálculo
 más consistente y preciso de superficie quemada disponible actualmente.
 Una vez obtenido este cómputo, interpretando visualmente la escena
 Landsat 9 de 8/04/2023, extraje las áreas quemadas que eran visibles
-entre las densas nubes que cubrieron la zona ese día. Agregué estas
-áreas complementarias a la superficie calculada por dNBR, y con esto
-obtuve el límite inferior del intervalo.
+entre las densas nubes que cubrieron la zona ese día. Imputé estas áreas
+complementarias a la superficie calculada por dNBR, y con esto obtuve el
+límite inferior del intervalo.
 
-Para obtener el límite superior del intervalo, usé los puntos de calor /
-anomalías térmicas de FIRMS correspondientes a los 7 días anteriores al
-8/04/2023, los cuales encerré en una envolvente convexa. Finalmente
-agregué a la superficie ya calculada, la estimada por estas extensiones,
-con lo cual obtuve el límite superior del intervalo de área quemada.
-Normalmente, los puntos de calor cubren un área mucho mayor que la
-superficie quemada, pues el fuego no quema de forma continua. Además los
-puntos de calor son producidos por algoritmos de detección de anomalía
-térmica, no determinando área quemada, además de que usan imágenes de
-resolución media.
+Para obtener el límite superior del intervalo agregué, al computo
+anterior, superficies imputadas como quemadas, las cuales construí a
+partir de envolventes convexas de los puntos de calor / anomalías
+térmicas de FIRMS correspondientes a los 7 días anteriores al 8/04/2023.
+Normalmente, los puntos de calor cubren un área de mayor extensión que
+la superficie quemada, pues el fuego no quema de forma continua ni en
+todo el perímetro. Además los puntos de calor son producidos por
+algoritmos de detección de anomalía térmica, no determinando área
+quemada. Finalmente, estos puntos son generados a partir de imágenes de
+resolución inferior a las usadas para obtener el cómputo por dNBR.
 
 Aplicaré el método del dNBR de forma consistente en la medida en la que
 nuevas escenas se hagan disponibles. De esta manera, encogeré la anchura
