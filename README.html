@@ -466,15 +466,17 @@ display: none;
 </div>
 
 
-<pre class="r"><code>library(raster)
+<pre class="r"><code># Paquetes
+library(raster)
 library(sf)
 library(kableExtra)
 library(tidyverse)
 estilo_kable &lt;- function(df, titulo = &#39;&#39;, cubre_anchura = T) {
   df %&gt;% kable(format = &#39;html&#39;, escape = F, booktabs = T, digits = 2, caption = titulo) %&gt;%
   kable_styling(bootstrap_options = c(&quot;hover&quot;, &quot;condensed&quot;), full_width = cubre_anchura)
-}</code></pre>
-<pre class="r"><code>#Todo el parque. Límite mínimo del intervalo
+}
+
+#Todo el parque. Límite mínimo del intervalo
 dnbr &lt;- raster(&#39;fuentes/dNBR-jose-del-carmen-ramirez-2023-masked-reclass-majority.tif&#39;)
 esa &lt;- raster(&#39;fuentes/esa-jose-del-carmen-ramirez-2023.tif&#39;)
 dnbr &lt;- resample(dnbr, esa)
@@ -491,8 +493,9 @@ cross_tab_parque_min &lt;- cross_tab_parque_min[c(&quot;Trees&quot;, &quot;Shrub
                                                  &quot;Grassland&quot;, &quot;Cropland&quot;)]
 pct_parque_min &lt;- round(prop.table(cross_tab_parque_min)*100, 2)
 km2_parque_min &lt;- cross_tab_parque_min * prod(res(dnbr_april8))/1000000
-total_km2_parque_min &lt;- sum(km2_parque_min)</code></pre>
-<pre class="r"><code>#Todo el parque. Límite máximo del intervalo
+total_km2_parque_min &lt;- sum(km2_parque_min)
+
+#Todo el parque. Límite máximo del intervalo
 hotspots &lt;- st_read(&#39;fuentes/mascara-quemado-inferido-imputado-from-hotspots.gpkg&#39;, quiet = T)
 dnbr_april8_hotspots &lt;- rasterize(as(hotspots, &#39;Spatial&#39;),
                                   y = dnbr_april8, field = &#39;DN&#39;, update = T)
@@ -505,8 +508,9 @@ cross_tab_parque_max &lt;- cross_tab_parque_max[c(&quot;Trees&quot;, &quot;Shrub
                                                  &quot;Grassland&quot;, &quot;Cropland&quot;)]
 pct_parque_max &lt;- round(prop.table(cross_tab_parque_max)*100, 2)
 km2_parque_max &lt;- cross_tab_parque_max * prod(res(dnbr_april8))/1000000
-total_km2_parque_max &lt;- sum(km2_parque_max)</code></pre>
-<pre class="r"><code>#Área de alarma social (próxima al pico Duarte). Límite mínimo del intervalo
+total_km2_parque_max &lt;- sum(km2_parque_max)
+
+#Área de alarma social (próxima al pico Duarte). Límite mínimo del intervalo
 aoi &lt;- st_read(&#39;fuentes/sector-norte-frontera-agropecuaria.gpkg&#39;, quiet = T)
 dnbr_april8_aoi &lt;- mask(crop(dnbr_april8, extent(aoi)), aoi)
 esa_aoi &lt;- mask(crop(esa, extent(aoi)), aoi)
@@ -515,8 +519,9 @@ cross_tab_aoi_min &lt;- cross_tab_aoi_min[, 2:4]
 names(cross_tab_aoi_min) &lt;- c(&quot;Trees&quot;, &quot;Shrubland&quot;, &quot;Grassland&quot;)
 pct_aoi_min &lt;- round(prop.table(cross_tab_aoi_min)*100, 2)
 km2_aoi_min &lt;- cross_tab_aoi_min * prod(res(dnbr_april8_aoi))/1000000
-total_km2_aoi_min &lt;- sum(km2_aoi_min)</code></pre>
-<pre class="r"><code>#Área de alarma social (próxima al pico Duarte). Límite máximo del intervalo
+total_km2_aoi_min &lt;- sum(km2_aoi_min)
+
+#Área de alarma social (próxima al pico Duarte). Límite máximo del intervalo
 dnbr_april8_hotspots_aoi &lt;- mask(crop(dnbr_april8_hotspots, extent(aoi)), aoi)
 cross_tab_aoi_max &lt;- crosstab(dnbr_april8_hotspots_aoi, esa_aoi)
 cross_tab_aoi_max &lt;- cross_tab_aoi_max[, 2:4]
@@ -535,10 +540,11 @@ total_km2_aoi_max &lt;- sum(km2_aoi_max)</code></pre>
 <blockquote>
 <p>“A los mayores les gustan las cifras”. Antoine de Saint-Exupéry, <em>El principito</em></p>
 </blockquote>
-<p>En lugar de darte una cifra cerrada, pues se trata de un evento aún en desarrollo (a 8 de abril de 2023), mejor te ofrezco un intervalo: <strong>5.71 <span class="math inline">\(\leq\)</span> valor definitivo <span class="math inline">\(\leq\)</span> 15.52</strong> <span class="math inline">\(km^2\)</span>. Prácticamente todo lo quemado es bosque en distintas densidades, pero también hay herbazales (cf. pajonales). Este intervalo contiene, con cierto nivel de confianza, <strong>la cantidad final de kilómetros cuadrados de área boscosa (en general, pinar) quemados durante marzo en el “área de mayor preocupación”, que es el borde norte del parque nacional J. del C. Ramírez en su aproximación hacia el pico Duarte</strong>. Como aclaré, esta área se quemó producto de un foco que inició a finales de marzo en cobertura no boscosa (e.g. frontera agrícola), y que remontó hacia el norte, adentrándose en el bosque y acercándose bastante al pico Duarte, donde produjo “alarma social”.</p>
-<p>¿Por qué es tan amplio el intervalo? Porque al obtenerlo por medio de imágenes satelitales, dependemos de que las nubes “nos dejen brechar”. Las estimaciones en tierra son de hecho mejores en este momento, pero una vez obtengamos una buena escena del área (sin nubes, y no mucho tiempo despues de la fecha de extinción del incendio), las estimaciones por medio de imágenes serán mejores.</p>
-<p>Pero enmarquemos el problema. Es marzo, las precipitaciones son muy reducidas y la preparación de tierras usando quemas está en su momento más álgido; el parque es, literalmente, un fogón. Es por esta razón que me interesa enmarcar este incendio en el contexto apropiado: se trata de un parque nacional con una incesante actividad agrícola, donde la quema se usa de manera regular (DENTRO del parque, reitero). No nos debería sorprender que las cifras de superficies quemadas sean enormes si analizamos lo que ocurrió fuera del área de “alarma social”. Veamos el dato también como intervalo: <strong>37.79 <span class="math inline">\(\leq\)</span> valor definitivo <span class="math inline">\(\leq\)</span> 47.59</strong> <span class="math inline">\(km^2\)</span>. Este intervalo contiene la cantidad de terreno quemado a partir del 21 de febrero hasta abril dentro del área protegida (en enero también se quemó otro poco). Mucho fue pastizal, matorral o bosque secundario, pero recuerda, es parque nacional. La distribución es como sigue: en el escenario de menor área quemada, sería 17.94 <span class="math inline">\(km^2\)</span> de bosque, y en el escenario de mayor área quemada 27.36 <span class="math inline">\(km^2\)</span>.</p>
-<p>No nos hemos “sentado” a tener esta discusión a nivel de país. Ni siquiera las áreas protegidas más carismáticas, como Los Haitises, sierra de Bahoruco o Valle Nuevo, han podido salir de este círculo de degradación ambiental. No obstante, de éstas se habla, “salen” en los medios, pero el parque nacional José del Carmen Ramírez no suele mencionarse. Si buscas su importancia encontrarás referencias sobre el agua, la biodiversidad y otros valores. Te lo voy a poner fácil: sin José del Carmen Ramírez no habrá Armando Bermúdez y, sin este último “se pué cuidá el Cibao (y to’ el país)”. No perdamos el foco, esto es serio, el país necesita esta discusión.</p>
+<p>En lugar de darte una cifra cerrada, pues se trata de un evento aún en desarrollo (a 8 de abril de 2023), mejor te ofrezco un intervalo: <strong>5.71 <span class="math inline">\(\leq\)</span> valor definitivo <span class="math inline">\(\leq\)</span> 15.52</strong> <span class="math inline">\(km^2\)</span>. Prácticamente todo lo quemado es bosque de distintas densidades, pero también hay herbazales (cf. pajonales). Este intervalo contiene, con cierto nivel de confianza, <strong>la cantidad final de kilómetros cuadrados de área boscosa (en general, pinar) quemados durante marzo en el “área de mayor preocupación”, que es el borde norte del parque nacional José del Carmen Ramírez en su aproximación hacia el pico Duarte</strong>. Como aclaré, esta área se quemó producto de un foco que inició a finales de marzo en cobertura no boscosa (e.g. frontera agrícola), y que remontó hacia el norte, adentrándose en el bosque y acercándose bastante al pico Duarte, donde produjo “alarma social”.</p>
+<p>¿Por qué es tan amplio el intervalo? Porque para obtenerlo por medio de imágenes satelitales, dependemos de que las nubes “nos dejen brechar” el terreno. Las estimaciones de superficie quemada realizadas en tierra, son de hecho más precisas en los primeros momentos, pero una vez obtengamos una buena escena del área (sin nubes, y no mucho tiempo despues de la fecha de extinción del incendio), las estimaciones por medio de imágenes serán mejores.</p>
+<p>Pero enmarquemos el problema. Es marzo, las precipitaciones son muy reducidas y la preparación de tierras usando quemas está en su momento más álgido; el parque es, literalmente, un fogón. Es por esta razón que me interesa darle el contexto requerido a este incendio: todo comenzó dentro de un parque nacional con una incesante actividad agrícola, donde la quema se usa de manera regular (DENTRO del parque, reitero). Por esta razón, si analizamos lo que ocurrió fuera del área de “alarma social”, no nos debería sorprender que las cifras de superficies quemadas sean enormes. Veamos el dato, también como intervalo: <strong>37.79 <span class="math inline">\(\leq\)</span> valor definitivo <span class="math inline">\(\leq\)</span> 47.59</strong> <span class="math inline">\(km^2\)</span>. Este intervalo contiene <strong>la cantidad de terreno quemado a partir del 21 de febrero hasta abril dentro del área protegida</strong> (en enero también se quemó otro poco). Mucho fue pastizal, matorral o bosque secundario, pero recuerda, es parque nacional. La distribución, según coberturas, es como sigue: en el escenario de menor área quemada, sería 17.94 <span class="math inline">\(km^2\)</span> de bosque, y en el escenario de mayor área quemada 27.36 <span class="math inline">\(km^2\)</span>.</p>
+<p>No nos hemos “sentado” a tener esta discusión a nivel de país, aunque esta realmente la norma respecto del conjunto de nuestro sistema de áreas protegidas. Ni siquiera las áreas más carismáticas, como Los Haitises, sierra de Bahoruco o Valle Nuevo, han podido salir de este círculo de degradación ambiental. No obstante, de éstas se habla, “salen” en los medios, pero el parque nacional José del Carmen Ramírez no suele mencionarse.</p>
+<p>Si buscas su importancia encontrarás referencias al agua, la biodiversidad y otros valores. Te lo voy a poner fácil: sin José del Carmen Ramírez no habrá Armando Bermúdez y, sin este último, “se pué cuidá el Cibao (y to’ el país)”. No perdamos el foco, esto es serio, el país necesita esta discusión.</p>
 <p>Luego pongo mapas, esto es todo por hoy.</p>
 </div>
 </div>
@@ -553,10 +559,13 @@ total_km2_aoi_max &lt;- sum(km2_aoi_max)</code></pre>
 <div id="la-cobertura-bosque" class="section level3">
 <h3>La cobertura “bosque”</h3>
 <p>La superficie de bosque, que se trata sobre todo de pinar, parte del dato ofrecido por la ESA <span class="citation">(Zanaga, Daniele et al. 2022)</span>. Realicé un simple chequeo cruzado de esta fuente, y noté un error muy común en estas clasificaciones: las áreas situadas en sombra de relieve, sobre todo en contextos muy intervenidos o de cobertura variable, suelen aparecer clasificadas como bosque cuando probablemente son sólo pastizales o matorrales. Es decir, en general, la cobertura “<em>tree cover</em>” de <span class="citation">Zanaga, Daniele et al. (2022)</span> está sobrestimada en áreas intervenidas. Una alternativa sería usar la capa de cobertura forestal dominicana del estudio de 2019, siempre que esté disponible sin previa petición, que no es el caso (ya estoy muy viejo para estar escribiendo la típica carta). Hay más alternativas, como <a href="https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_Landcover_100m_Proba-V-C3_Global">Copernicus Global Land Cover Layers</a> o <a href="https://developers.google.com/earth-engine/datasets/catalog/UMD_hansen_global_forest_change_2021_v1_9">Hansen Global Forest Change v1.9 (2000-2021)</a>, pero no encontraremos grandes diferencias, al menos en la parte más boscosa del parque. No obstante, la fuente suele ser consistente en áreas donde el bosque es generalizado, lo cual en el parque nacional José del Carmen Ramírez, ocurre hacia el norte y al noroeste.</p>
+</div>
+</div>
+<div id="referencias" class="section level2 unnumbered">
+<h2>Referencias</h2>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-zanagadaniele2022" class="csl-entry">
 Zanaga, Daniele, Van De Kerchove, Ruben, Daems, Dirk, De Keersmaecker, Wanda, Brockmann, Carsten, Kirches, Grit, Wevers, Jan, et al. 2022. <span>“ESA WorldCover 10 m 2021 V200,”</span> October. <a href="https://doi.org/10.5281/ZENODO.7254221">https://doi.org/10.5281/ZENODO.7254221</a>.
-</div>
 </div>
 </div>
 </div>
