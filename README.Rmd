@@ -10,6 +10,8 @@ output:
     code_folding: hide
     fig_caption: yes
     md_extensions: "-fancy_lists"
+    includes:
+      in_header: GA_Script.html
 editor_options: 
   chunk_output_type: console
 always_allow_html: true
